@@ -1,62 +1,41 @@
-const express = require('express')
-const productRouter = express.Router()
-const productController = require('../controller/product')
+const express = require("express");
+const productRouter = express.Router();
+const productController = require("../controller/product");
 
-// C R U D
-// REST API is standard for API
-// we do not have states in rest api
-// Create Read Update Delete
+productRouter.post("/", productController.createUser);
 
-// Create POST
-productRouter.post('/', productController.createUser) // this is route
+productRouter.get("/", productController.getAllProducts);
 
-// Read GET /product
-productRouter.get('/', productController.getAllProducts)
+productRouter.get("/:id", productController.getProduct);
 
-// READ GET /product/:id
-productRouter.get('/:id', productController.getProduct)
+productRouter.put("/:id", productController.replaceProduct);
 
-// Update PUT /product/:id
-// put is used to override 
-productRouter.put('/:id', productController.replaceProduct)
+productRouter.patch("/:id", productController.updateProduct);
 
-// Update PATCH /product/:id
-// put is used to update new thing and do not touch old thing
-// it only replace thing that is mentioned 
-productRouter.patch('/:id', productController.updateProduct)
+productRouter.delete("/:id", productController.deleteProduct);
 
-// Delete DELETE /product/:id
-// we cannot delete anything
-productRouter.delete('/:id', productController.deleteProduct)
+productRouter.get("/", (req, res) => {
+  res.json({ type: "GET" });
+});
 
-productRouter.get('/', (req, res) => {
-    res.json({ type: "GET" })
-}) // after sending response we need to end it it will not go further
+productRouter.post("/", (req, res) => {
+  res.json({ type: "POST" });
+});
 
-productRouter.post('/', (req, res) => {
-    res.json({ type: "POST" })
-})
+productRouter.put("/", (req, res) => {
+  res.json({ type: "PUT" });
+});
 
-productRouter.put('/', (req, res) => {
-    res.json({ type: "PUT" })
-})
+productRouter.patch("/", (req, res) => {
+  res.json({ type: "PATCH" });
+});
 
-productRouter.patch('/', (req, res) => {
-    res.json({ type: "PATCH" })
-})
+productRouter.delete("/", (req, res) => {
+  res.json({ type: "DELETE" });
+});
 
-productRouter.delete('/', (req, res) => {
-    res.json({ type: "DELETE" })
-})
+productRouter.get("/demo", (req, res) => {
+  res.json(products);
+});
 
-productRouter.get('/demo', (req, res) => {
-    // res.send(`<h1>Hello</h1>`)
-    // res.sendFile('./index.html', { root: __dirname })
-    // in express we can directly send file using sendFile
-    // we need to send absolute path of file
-    res.json(products)
-    // res.sendStatus(404)
-    // res.status(404).json({ message: "Page Not Found" })
-})
-
-module.exports = productRouter
+module.exports = productRouter;
